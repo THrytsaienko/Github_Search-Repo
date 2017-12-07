@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body ng-app="githubApp">
-    <div class="container" ng-controller="MainCtrl">
+<body ng-app="App">
+    <div class="container" ng-controller="Controller">
         <div class="row">
             <h2 class="text-center">Search Github Repository</h2>
             <div class="input-group">
-                <input type="text" class="form-control" name="search-git" ng-model="searchTerm" placeholder="Name of repository" on-enter="doSearch()">
-                <button class="btn btn-primary" type="button" ng-click="doSearch()">
+                <input type="text" class="form-control" name="search-git" ng-model="repoName" placeholder="Name of repository" on-enter="searchRepo()">
+                <button class="btn btn-primary" type="button" ng-click="searchRepo()">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
             </div>
@@ -69,10 +69,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-resource.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script> -->
-
 </body>
 
 </html>

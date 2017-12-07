@@ -1,17 +1,17 @@
 'use strict';
 
-var githubApp = angular.module('githubApp', [
+var app = angular.module('App', [
     'ngRoute',
     'ngResource',
-    'MainCtrl',
+    'Controller',
     'Utils',
     'Config'
 ]);
 
-githubApp.config(["$routeProvider", function ($routeProvider) {
+app.config(["$routeProvider", function ($routeProvider) {
         $routeProvider
             .when('/', {
-                controller: 'MainCtrl'
+                controller: 'Controller'
             })
             .otherwise({
                 redirectTo: '/'
@@ -19,19 +19,19 @@ githubApp.config(["$routeProvider", function ($routeProvider) {
     }]),
 
     angular.module('Config', []).constant('Config', {
-        searchTerm: 'angular'
+        repoName: 'angular'
     }),
 
-    angular.module('MainCtrl', []).controller('MainCtrl', ['$scope', '$compile', 'Config', 'Github', 'Utils',
+    angular.module('Controller', []).controller('Controller', ['$scope', '$compile', 'Config', 'Github', 'Utils',
         function ($scope, $compile, Config, Github, Utils) {
 
-            $scope.searchTerm = Config.searchTerm;
+            $scope.repoName = Config.repoName;
 
             var GithubApi = new Github();
             getResults();
 
             function getResults() {
-                var searchRepos = GithubApi.searchAngularRepos($scope.searchTerm);
+                var searchRepos = GithubApi.searchAngularRepos($scope.repoName);
 
                 searchRepos.success(function (data) {
                     if (data && data.items) {
@@ -42,7 +42,7 @@ githubApp.config(["$routeProvider", function ($routeProvider) {
             }
 
 
-            $scope.doSearch = function () {
+            $scope.searchRepo = function () {
                 getResults();
             };
 
@@ -59,8 +59,7 @@ githubApp.config(["$routeProvider", function ($routeProvider) {
         }
     ]),
 
-    githubApp.directive('myTruncate', [function () {
-
+    app.directive('myTruncate', [function () {
         return {
             link: function link(scope, element, attrs) {
                 element.text(
@@ -70,7 +69,8 @@ githubApp.config(["$routeProvider", function ($routeProvider) {
         };
 
     }]),
-    githubApp.directive('onEnter', [function () {
+
+    app.directive('onEnter', [function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
                 if (event.which === 13) {
@@ -85,7 +85,7 @@ githubApp.config(["$routeProvider", function ($routeProvider) {
         };
     }]),
 
-    githubApp.filter('offset', function () {
+    app.filter('offset', function () {
         return function (input, start) {
             if (input) {
                 start = parseInt(start, 10);
@@ -94,11 +94,8 @@ githubApp.config(["$routeProvider", function ($routeProvider) {
         };
     }),
 
-    githubApp.factory('Github', ['$http', function ($http) {
-
-        function Github() {
-
-        }
+    app.factory('Github', ['$http', function ($http) {
+        function Github() {}
 
         Github.prototype.searchAngularRepos = function (term) {
             return $http.get('https://api.github.com/search/repositories?q=' + term);
@@ -108,7 +105,6 @@ githubApp.config(["$routeProvider", function ($routeProvider) {
     }]),
 
     angular.module('Utils', []).service("Utils", [function () {
-
         this.extractInfoRepo = function (gitHubResults) {
             var relevantInfo = [];
             gitHubResults.forEach(function (result) {
