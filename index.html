@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search Github Repository</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body ng-app="githubApp">
+    <div class="container" ng-controller="MainCtrl">
+        <div class="row">
+            <h2 class="text-center">Search Github Repository</h2>
+            <div class="input-group">
+                <input type="text" class="form-control" name="search-git" ng-model="searchTerm" placeholder="Name of repository" on-enter="doSearch()">
+                <button class="btn btn-primary" type="button" ng-click="doSearch()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+            <table class="table table-bordered table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th class="info text-center vertical">Project name</th>
+                        <th class="info text-center vertical">Author</th>
+                        <th class="info text-center vertical">Number of stars</th>
+                        <th class="info text-center vertical">Number of issues</th>
+                        <th class="info text-center vertical">Avatar</th>
+                        <th class="info text-center vertical">Private or Public</th>
+                        <th class="info text-center vertical">Link to repo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="result in results | offset: pconfig.currentPage*pconfig.itemsPerPage | limitTo: pconfig.itemsPerPage">
+                        <td class="vertical">
+                            <p ng-show="result.title">{{result.title}}</p>
+                        </td>
+                        <td class="vertical">
+                            <p ng-show="result.owner.name">{{result.owner.name}}</p>
+                        </td>
+                        <td class="vertical">
+                            <p ng-show="result.stars">{{result.stars}}</p>
+                        </td>
+                        <td class="vertical">
+                            <p ng-show="result.issues">{{result.issues}}</p>
+                        </td>
+                        <td class="vertical">
+                            <img ng-src="{{result.owner.avatarUrl}}" class="img-responsive" />
+                        </td>
+                        <td class="vertical">
+                            <p ng-show="result.private">{{result.private}}</p>
+                        </td>
+                        <td class="vertical">
+                            <a ng-href="{{result.url}}" title="Go to project page" target="_blank">Go to project page</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="pagination" class="text-center"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-resource.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"></script> -->
+
+</body>
+
+</html>
